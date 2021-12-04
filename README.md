@@ -1,7 +1,8 @@
 # learning-react
 
 <h3> 
-  I'll use this repo to share some exercises I'm doing regarding react. <br>
+  I'll use this repo to share some exercises I'm doing. <br>
+  <br>
 Feel free to leave your contribution. This will certainly be of great value to my learning process.
 </h3>
 
