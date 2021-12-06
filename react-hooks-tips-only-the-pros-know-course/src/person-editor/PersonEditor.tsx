@@ -1,10 +1,18 @@
-import React, { ReactElement, useState, useEffect } from "react"
+import React, { ReactElement, useEffect, useRef } from "react"
 import { LabeledInput, Loading } from "../components"
 import { initialPerson } from "../utils"
 import { usePerson } from "./usePerson"
 
 export function PersonEditor(): ReactElement {
   const [person, setPerson] = usePerson(initialPerson)
+  const input = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    setTimeout(() => {
+      input.current?.focus()
+    }, 1000)
+  }, [])
+
   if (!person) {
     return <Loading />
   }
@@ -19,6 +27,7 @@ export function PersonEditor(): ReactElement {
     >
       <h2>Person Editor</h2>
       <LabeledInput
+        ref={input}
         label="Firstname:"
         value={person.firstname}
         onChange={(e) => {
