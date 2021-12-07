@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import localforage from "localforage"
 import type { Person } from "../types/person"
 import { sleep } from "../utils"
 import { useIsMounted } from "../hooks/useIsMounted"
-import {useDebounce} from "../hooks/useDebounce"
+import { useDebounce } from "../hooks/useDebounce"
 
 function savePerson(person: Person | null): void {
   console.log("Saving person: ", person)
@@ -18,15 +18,23 @@ export function usePerson(initialPerson: Person) {
     const getPerson = async () => {
       const person = await localforage.getItem<Person>("person")
       await sleep(2500)
-      if(isMounted.current){
+      if (isMounted.current) {
         setPerson(person ?? initialPerson)
       }
     }
     getPerson()
   }, [initialPerson, isMounted])
 
-  useDebounce(() => {
+  const [, setNow] = useState(new Date())
+  useEffect(() => {
+    const handle = setInterval(() => setNow(new Date()), 1500)
+    return () => clearInterval(handle)
+  }, [])
+
+  const saveFn = useCallback(() => {
     savePerson(person)
-  }, 1000)
+  }, [person])
+
+  useDebounce(saveFn, 1000)
   return [person, setPerson] as const
 }
