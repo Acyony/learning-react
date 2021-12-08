@@ -1,20 +1,38 @@
-import { useState, useEffect, useCallback } from "react"
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useDebugValue,
+  SetStateAction
+} from "react"
 import localforage from "localforage"
 import type { Person } from "../types/person"
 import { sleep } from "../utils"
 import { useIsMounted } from "../hooks/useIsMounted"
 import { useDebounce } from "../hooks/useDebounce"
-import {useWillUnmount} from "../hooks/useWillUnmount"
-import {useThrottle} from "../hooks/useThrottle"
+import { useWillUnmount } from "../hooks/useWillUnmount"
+import { useThrottle } from "../hooks/useThrottle"
 
 function savePerson(person: Person | null): void {
   console.log("Saving person: ", person)
   localforage.setItem("person", person)
 }
 
+interface Metadata {
+  isDirty: boolean,
+  isValid: boolean
+}
+
+
 export function usePerson(initialPerson: Person) {
   const [person, setPerson] = useState<Person | null>(null)
+  const [metadata, setMetadata] = useState<Metadata>({
+    isDirty: false,
+    isValid: true
+  })
   const isMounted = useIsMounted()
+  useDebugValue(person, (p) => `${p?.firstname} ${p?.surname}`)
+
 
   useEffect(() => {
     const getPerson = async () => {
@@ -39,5 +57,13 @@ export function usePerson(initialPerson: Person) {
 
   useThrottle(saveFn, 1000)
   useWillUnmount(saveFn)
-  return [person, setPerson] as const
+
+  function setPersonAndMeta(value: SetStateAction<Person | null>){
+    setPerson(value)
+    setMetadata((m)=>({...m, isDirty:true}))
+    //tODo validate
+
+  }
+
+  return [person, setPersonAndMeta, metadata] as const
 }
