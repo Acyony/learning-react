@@ -3,7 +3,8 @@ import {
   useEffect,
   useCallback,
   useDebugValue,
-  SetStateAction
+  SetStateAction,
+  useReducer
 } from "react"
 import localforage from "localforage"
 import type { Person } from "../types/person"
@@ -12,6 +13,8 @@ import { useIsMounted } from "../hooks/useIsMounted"
 import { useDebounce } from "../hooks/useDebounce"
 import { useWillUnmount } from "../hooks/useWillUnmount"
 import { useThrottle } from "../hooks/useThrottle"
+import { personEditorReducer } from "./personEditorReducer"
+
 
 function savePerson(person: Person | null): void {
   console.log("Saving person: ", person)
@@ -25,11 +28,17 @@ interface Metadata {
 
 
 export function usePerson(initialPerson: Person) {
-  const [person, setPerson] = useState<Person | null>(null)
-  const [metadata, setMetadata] = useState<Metadata>({
-    isDirty: false,
-    isValid: true
+  /* const [person, setPerson] = useState<Person | null>(null)
+   const [metadata, setMetadata] = useState<Metadata>({
+     isDirty: false,
+     isValid: true
+   })*/
+  const [{ person, metadata }, dispatch] = useReducer(personEditorReducer, {
+    person: null,
+    metadata: {isDirty: false, isValid: true}
+
   })
+
   const isMounted = useIsMounted()
   useDebugValue(person, (p) => `${p?.firstname} ${p?.surname}`)
 
@@ -39,7 +48,10 @@ export function usePerson(initialPerson: Person) {
       const person = await localforage.getItem<Person>("person")
       await sleep(2500)
       if (isMounted.current) {
-        setPerson(person ?? initialPerson)
+        dispatch({
+          type: "set-initial-person",
+          payload: person ?? initialPerson
+        })
       }
     }
     getPerson()
@@ -58,12 +70,20 @@ export function usePerson(initialPerson: Person) {
   useThrottle(saveFn, 1000)
   useWillUnmount(saveFn)
 
-  function setPersonAndMeta(value: SetStateAction<Person | null>){
-    setPerson(value)
-    setMetadata((m)=>({...m, isDirty:true}))
+  function setPersonAndMeta(value: SetStateAction<Person | null>) {
+    // setPerson(value)
+    // setMetadata((m)=>({...m, isDirty:true}))
     //tODo validate
 
   }
 
-  return [person, setPersonAndMeta, metadata] as const
+  function setProperty(name: keyof Person, value: unknown){
+    dispatch({type: "set-property", payload: {name, value}})
+  }
+
+  function setProperties(payload:Partial<Person>){
+    dispatch({ type: "set-properties", payload })
+  }
+
+  return [person, setProperty, setProperties, metadata] as const
 }
