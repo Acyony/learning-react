@@ -4,7 +4,8 @@ import {
   useCallback,
   useDebugValue,
   SetStateAction,
-  useReducer
+  useReducer,
+  useMemo
 } from "react"
 import localforage from "localforage"
 import type { Person } from "../types/person"
@@ -28,19 +29,25 @@ interface Metadata {
 
 
 export function usePerson(initialPerson: Person) {
-  /* const [person, setPerson] = useState<Person | null>(null)
-   const [metadata, setMetadata] = useState<Metadata>({
-     isDirty: false,
-     isValid: true
-   })*/
   const [{ person, metadata }, dispatch] = useReducer(personEditorReducer, {
     person: null,
-    metadata: {isDirty: false, isValid: true}
-
+    metadata: { isDirty: false, isValid: true }
   })
 
   const isMounted = useIsMounted()
   useDebugValue(person, (p) => `${p?.firstname} ${p?.surname}`)
+
+  const firstAndSurname = useMemo(
+    () => ({
+      firstname: person?.firstname,
+      surname: person?.surname
+    }),
+    [person?.firstname, person?.surname]
+  )
+
+  useEffect(() => {
+    console.log("firstAndSurname", firstAndSurname)
+  }, [firstAndSurname])
 
 
   useEffect(() => {
@@ -56,12 +63,12 @@ export function usePerson(initialPerson: Person) {
     }
     getPerson()
   }, [initialPerson, isMounted])
-
-  const [, setNow] = useState(new Date())
-  useEffect(() => {
-    const handle = setInterval(() => setNow(new Date()), 1500)
-    return () => clearInterval(handle)
-  }, [])
+  //
+  // const [, setNow] = useState(new Date())
+  // useEffect(() => {
+  //   const handle = setInterval(() => setNow(new Date()), 1500)
+  //   return () => clearInterval(handle)
+  // }, [])
 
   const saveFn = useCallback(() => {
     savePerson(person)
@@ -77,11 +84,11 @@ export function usePerson(initialPerson: Person) {
 
   }
 
-  function setProperty(name: keyof Person, value: unknown){
-    dispatch({type: "set-property", payload: {name, value}})
+  function setProperty(name: keyof Person, value: unknown) {
+    dispatch({ type: "set-property", payload: { name, value } })
   }
 
-  function setProperties(payload:Partial<Person>){
+  function setProperties(payload: Partial<Person>) {
     dispatch({ type: "set-properties", payload })
   }
 
