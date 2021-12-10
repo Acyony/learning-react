@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {StorageContext} from "../contexts";
+import Stars from "./stars";
 
 function Results() {
     const {mainState} = useContext(StorageContext);
@@ -16,12 +17,15 @@ function Results() {
     if (mainState.dataStatus === 'done') {
         const images = mainState.products.map((product, index) => {
             return (
-                <div className="col-3" key={product.ikea_id}>
-                    <img
-                        className="img-thumbnail"
-                        onError={productImgError}
-                        src={product.image}
-                        alt={product.name}/>
+                <div key={product.ikea_id} className="col-3">
+                    <div className="card">
+                        <img className="card-img-top" onError={productImgError} src={product.image} alt={product.name}/>
+                        <div className="card-body">
+                            <h5 className="card-title">{product.name}</h5>
+                            <Stars rate={product.rate}/> 
+                            <a href="#" className="btn btn-primary">Details</a>
+                        </div>
+                    </div>
                 </div>
             )
         })
