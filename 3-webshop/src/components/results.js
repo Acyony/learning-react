@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import {Link} from 'react-router-dom';
 import {StorageContext} from "../contexts";
 import Stars from "./stars";
 
@@ -15,15 +16,16 @@ function Results() {
     }
 
     if (mainState.dataStatus === 'done') {
-        const images = mainState.products.map((product, index) => {
+        const images = mainState.products.map(product => {
             return (
                 <div key={product.ikea_id} className="col-3">
                     <div className="card">
                         <img className="card-img-top" onError={productImgError} src={product.image} alt={product.name}/>
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
-                            <Stars rate={product.rate}/> 
-                            <a href="#" className="btn btn-primary">Details</a>
+                            <h6>{product.price} Euro</h6>
+                            <Stars rate={product.rating}/>
+                            <Link to={`/`} className="btn btn-primary">Details</Link>
                         </div>
                     </div>
                 </div>

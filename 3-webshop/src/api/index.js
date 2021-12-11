@@ -13,6 +13,5 @@ export const getData = async (searchWord) => {
         method: "POST",
         body: JSON.stringify(obj)
     });
-    const data = await response.json();
-    return data;
+    return await response.json();
 }

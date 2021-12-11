@@ -14,7 +14,6 @@ function Search() {
     // create searchBtnClick event handler
     const searchBtnClick = async () => {
         const data = await getData(searchWord);
-        console.log(data.results[0].hits);
         if (data.results[0].hits.length) {
             setMainState(doneAction(data.results[0].hits));
         } else {
