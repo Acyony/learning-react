@@ -25,7 +25,7 @@ function Results() {
                             <h5 className="card-title">{product.name}</h5>
                             <h6>{product.price} Euro</h6>
                             <Stars rate={product.rating}/>
-                            <Link to={`/`} className="btn btn-primary">Details</Link>
+                            <Link to={`/products/${product.ikea_id}`} className="btn btn-primary">Details</Link>
                         </div>
                     </div>
                 </div>
