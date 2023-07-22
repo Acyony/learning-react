@@ -1,0 +1,25 @@
+.shopTitle {
+  margin-top: 6.25rem;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.products {
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
+  object-fit: cover;
+}
+
+.product .description {
+  text-align: center;
+}
+
+.product:hover {
+  transition: 0.3s ease-in;
+  cursor: pointer;
+}
+
+.shop {
+  background-color: cornflowerblue;
+}
