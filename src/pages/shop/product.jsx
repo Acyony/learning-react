@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Product = (props) => {
-  const { id, description, name, price, productImage } = props.data;
+  const { id, description, name, price, productImage, status } = props.data;
   return (
     <div className="product col-xs-12 col-sm-12 col-md-6 col-lg-4 ">
       <div style={{ height: "400px" }} className="card-img-top">
@@ -15,6 +15,8 @@ export const Product = (props) => {
       <div className="card-body mt-3 mb-5">
         <h5 className="card-title">{name}</h5>
         <p className="card-text">€ {price}</p>
+        <p className="card-text">{description}</p>
+        <p className="card-text">{status}</p>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ export const PRODUCTS = [
     name: "Product 1",
     price: 100,
     productImage: p1,
+    status: "new",
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ export const PRODUCTS = [
     name: "Product 2",
     price: 100,
     productImage: p2,
+    status: "new",
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ export const PRODUCTS = [
     name: "Product 3",
     price: 100,
     productImage: p3,
+    status: "new",
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ export const PRODUCTS = [
     name: "Product 4",
     price: 100,
     productImage: p4,
+    status: "new",
   },
   {
     id: 5,
@@ -40,6 +44,7 @@ export const PRODUCTS = [
     name: "Product 5",
     price: 100,
     productImage: p5,
+    status: "new",
   },
   {
     id: 6,
@@ -47,6 +52,7 @@ export const PRODUCTS = [
     name: "Product 6",
     price: 100,
     productImage: p6,
+    status: "new",
   },
   {
     id: 7,
@@ -54,5 +60,6 @@ export const PRODUCTS = [
     name: "Product 7",
     price: 100,
     productImage: p7,
+    status: "new",
   },
 ];
