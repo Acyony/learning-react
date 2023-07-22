@@ -3,7 +3,7 @@ import React from "react";
 export const Product = (props) => {
   const { id, description, name, price, productImage, status } = props.data;
   return (
-    <div className="product col-xs-12 col-sm-12 col-md-6 col-lg-4 ">
+    <div className="product col-xs-12 col-sm-12 col-md-6 col-lg-4">
       <div style={{ height: "400px" }} className="card-img-top">
         <img
           src={productImage}
