@@ -17,6 +17,11 @@ layout shift scores in a real application, as explained in the [CLS documentatio
 
 # Getting Started with Create React App
 
+You can clone the whole repo where the project is alocated and switch to the folder that contains it.
+git@github.com:Acyony/learning-react.git
+
+rum `npm install` to install all dependencies.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
