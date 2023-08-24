@@ -1,11 +1,19 @@
-This API has been created for educational purposes. Its core functionality involves sending a request to an endpoint. 
+This API has been created for learning purposes. Its core functionality involves sending a request to an endpoint. 
 Upon receiving the response, the data is then consumed within the frontend of the application.
 
 
+https://github.com/Acyony/learning-react/assets/42450397/cc0910e4-1b01-48c2-bd5f-babab56a03fe
+
+
+
+
 # To improve
-When there are no more new pictures to display, the message "No more Characters to show ٩(˘◡˘)۶" suddenly 
+There are still a lot of things that I can do to Improve this single api, and one I would like to poin out it that
+when there are no more new pictures to display, the message "No more Characters to show ٩(˘◡˘)۶" suddenly 
 appears on the page. This abrupt appearance leads to unexpected changes in the layout, which can impact the 
 layout shift scores in a real application, as explained in the [CLS documentation](https://web.dev/cls/).
+
+
 
 # Getting Started with Create React App
 
